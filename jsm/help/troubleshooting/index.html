@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Troubleshooting — ReplyMerge for Jira Service Management</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="wrap">
+    <header class="site-header">
+      <a href="../../../">Inflexion docs</a><span class="sep">·</span><span class="product">ReplyMerge for Jira Service Management</span>
+    </header>
+
+    <h1>Troubleshooting</h1>
+    <table>
+      <thead><tr><th>Symptom</th><th>Likely cause</th><th>What to check</th></tr></thead>
+      <tbody>
+        <tr><td>No detection logs</td><td>App not installed / trigger not deployed</td><td><code>forge install list</code>, <code>forge logs</code></td></tr>
+        <tr><td><code>skipped … not email</code></td><td>Channel isn’t email</td><td>Issue property <code>request.channel.type</code>; don’t enable test marker in prod</td></tr>
+        <tr><td>No match on a clear reply</td><td>Subject normalization / lookback / newer-candidate rule</td><td>Normalized subjects; candidate must be <strong>older</strong>; lookback days</td></tr>
+        <tr><td>Expensive searches on every new mail</td><td>Old bug: fallback without Re: prefix</td><td>Current code only fallbacks when subject has Re:/Fwd:/AW:/…</td></tr>
+        <tr><td>Match found but no merge</td><td>Dry-run still on; toggle OFF; marker/guard refused</td><td>Admin <strong>Enable auto-merge</strong> OFF; <code>DEDUPE_DRY_RUN</code> kill switch; live-project guards; merge-only marker</td></tr>
+        <tr><td>Merge completed, source still open</td><td>No complete close path / workflow unreadable</td><td>Internal note on source; set <code>DEDUPE_CLOSE_TRANSITION_*</code>; confirm <code>read:workflow:jira</code> granted</td></tr>
+        <tr><td>Attachment missing after merge</td><td>Oversized or download/upload failure</td><td>Audit property <code>attachmentsSkipped</code></td></tr>
+        <tr><td>Reporter added as participant</td><td>Fixed in post-E2E builds</td><td>Ensure production version includes reporter skip</td></tr>
+        <tr><td>Description missing on target</td><td>Empty description or old build</td><td>Reply body lives in description for plain emails — need description-copy build</td></tr>
+        <tr><td>Rate limiting / slow merges</td><td>Points / burst / per-issue write limits</td><td>Stagger; avoid huge threads</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Logs</h2>
+    <pre><code>forge logs -e production
+# or development
+forge logs -e development</code></pre>
+    <p>Look for JSON lines: <code>email-dedupe detection</code>, <code>merge result</code>.</p>
+
+    <h2>Still stuck</h2>
+    <p>See <a href="../../support/">Support</a>. Sanitize PII before sharing.</p>
+
+    <footer class="site-footer">
+      <a href="mailto:support@inflexion.pl">support@inflexion.pl</a>
+    </footer>
+  </div>
+</body>
+</html>

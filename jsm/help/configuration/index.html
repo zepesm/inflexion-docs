@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Configuration — ReplyMerge for Jira Service Management</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="wrap">
+    <header class="site-header">
+      <a href="../../../">Inflexion docs</a><span class="sep">·</span><span class="product">ReplyMerge for Jira Service Management</span>
+    </header>
+
+    <h1>Configuration</h1>
+    <p>Product: <strong>ReplyMerge for Jira Service Management</strong>.</p>
+    <p>Two layers control dry-run vs live. <strong>Both</strong> must allow live before auto-merge runs (except the existing live-project guard used for controlled tests).</p>
+
+    <h2>1. Admin page (per site) — primary control</h2>
+    <p>Jira administration → <strong>Apps</strong> → <strong>Email reply dedupe</strong> (Forge UI Kit admin page):</p>
+    <table>
+      <thead><tr><th>Control</th><th>Default</th><th>Effect</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Enable auto-merge (live mode)</strong></td><td><strong>OFF</strong></td><td>OFF = dry-run (detect/diagnose only). ON = allow merges when the env kill switch also allows live.</td></tr>
+        <tr><td>Current mode</td><td>derived</td><td>Shows dry-run vs auto-merge</td></tr>
+        <tr><td>Effective settings</td><td>read-only</td><td>Lookback, attachment cap, env kill-switch state, guards (non-secret)</td></tr>
+      </tbody>
+    </table>
+    <p>Only <strong>Jira administrators</strong> can change the toggle. Changes are stored in Forge app storage (<code>storage:app</code>) with who changed it and when.</p>
+
+    <h2>2. Env kill switch (<code>DEDUPE_DRY_RUN</code>)</h2>
+    <p>Forge environment variables (<code>forge variables set -e &lt;env&gt; …</code>), then <strong>redeploy</strong>.</p>
+    <table>
+      <thead><tr><th>Value</th><th>Effect</th></tr></thead>
+      <tbody>
+        <tr><td>unset / <code>true</code> / anything except <code>false</code>/<code>0</code></td><td><strong>Forces dry-run</strong> (kill switch ON) — even if the admin toggle is ON</td></tr>
+        <tr><td><code>false</code> or <code>0</code></td><td>Allows live <strong>only if</strong> the admin toggle is also ON</td></tr>
+      </tbody>
+    </table>
+    <p>First production deploy: keep <code>DEDUPE_DRY_RUN=true</code>.</p>
+    <pre><code>forge variables set -e production DEDUPE_DRY_RUN true
+# Later, after validation:
+# forge variables set -e production DEDUPE_DRY_RUN false
+# forge deploy -e production
+# Then a Jira admin enables the toggle on the admin page.</code></pre>
+
+    <h2>Other variables</h2>
+    <table>
+      <thead><tr><th>Variable</th><th>Default / notes</th></tr></thead>
+      <tbody>
+        <tr><td><code>DEDUPE_MERGE_ONLY_MARKER</code></td><td>Default <code>[dedupe-test]</code>; both summaries must contain it for unmarked safety when used</td></tr>
+        <tr><td><code>DEDUPE_TEST_CHANNEL_MARKER</code></td><td>Test-only: treat marked REST tickets as email channel</td></tr>
+        <tr><td><code>DEDUPE_MERGE_DELAY_SECONDS</code></td><td>0–900; delay before merge job (mail attachments)</td></tr>
+        <tr><td><code>DEDUPE_CLOSE_TRANSITION_ID</code></td><td>Optional first hop of close path</td></tr>
+        <tr><td><code>DEDUPE_CLOSE_TRANSITION_NAME</code></td><td>Optional close transition name</td></tr>
+        <tr><td><code>DEDUPE_MAX_CLOSE_STEPS</code></td><td>Default 5; max hops in pre-checked path</td></tr>
+        <tr><td><code>DEDUPE_MAX_FALLBACK_CANDIDATES</code></td><td>Default 20; reply-prefix fallback search cap</td></tr>
+        <tr><td><code>DEDUPE_LIVE_PROJECT</code></td><td>Optional single project key for guarded live mode</td></tr>
+        <tr><td><code>DEDUPE_GUARD_MIN_ISSUE_NUMBER</code></td><td>Live guard: min issue number</td></tr>
+        <tr><td><code>DEDUPE_GUARD_CREATED_AFTER</code></td><td>Live guard: ISO timestamp</td></tr>
+        <tr><td><code>DEDUPE_LIVE_REQUIRE_MARKER</code></td><td>When true in live-project mode, require marker on both sides</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Other defaults</h2>
+    <ul>
+      <li>Lookback window: 14 days</li>
+      <li>Max attachment copy size: 50 MiB</li>
+      <li>Audit property: <code>jsm-email-dedupe.merge</code></li>
+      <li>Detection property: <code>jsm-email-dedupe.detection</code></li>
+    </ul>
+
+    <h2>Scopes</h2>
+    <p>Scopes and justifications are listed on the <a href="../../security/">Security &amp; data handling</a> page. Includes <code>read:workflow:jira</code> (close-path pre-check) and <code>storage:app</code> (admin toggle KVS).</p>
+
+    <h2>Recommended production posture</h2>
+    <ol>
+      <li>Deploy with <code>DEDUPE_DRY_RUN=true</code>; leave admin toggle <strong>OFF</strong>.</li>
+      <li>Validate detection on a disposable JSM project.</li>
+      <li>Set <code>DEDUPE_DRY_RUN=false</code> and redeploy only with change control.</li>
+      <li>Jira admin turns <strong>Enable auto-merge</strong> ON when ready.</li>
+      <li>Prefer explicit close transition id/name if the workflow is non-trivial.</li>
+      <li>Do not use <code>DEDUPE_TEST_CHANNEL_MARKER</code> in production.</li>
+    </ol>
+
+    <footer class="site-footer">
+      <a href="mailto:support@inflexion.pl">support@inflexion.pl</a>
+    </footer>
+  </div>
+</body>
+</html>

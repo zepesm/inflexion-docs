@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Install — ReplyMerge for Jira Service Management</title>
+  <link rel="stylesheet" href="../../../assets/style.css">
+</head>
+<body>
+  <div class="wrap">
+    <header class="site-header">
+      <a href="../../../">Inflexion docs</a><span class="sep">·</span><span class="product">ReplyMerge for Jira Service Management</span>
+    </header>
+
+    <h1>Install</h1>
+
+    <h2>From Atlassian Marketplace</h2>
+    <ol>
+      <li>Site admin opens the Marketplace listing.</li>
+      <li>Select the Jira / JSM Cloud site → Install.</li>
+      <li>Review requested scopes and approve.</li>
+      <li>Confirm the App appears under <strong>Apps</strong> on the site and open the <strong>Email reply dedupe</strong> admin page.</li>
+      <li>Leave <strong>Enable auto-merge</strong> OFF and keep env dry-run as shipped until you finish <a href="../configuration/">Configuration</a>.</li>
+    </ol>
+    <p>Cloud Marketplace apps must match the parent product user/agent tier (<a href="https://www.atlassian.com/licensing/purchase-licensing">Purchase &amp; licensing FAQ</a>). Trial length is <strong>30 days</strong> for Marketplace apps.</p>
+
+    <h2>From Forge CLI (developer)</h2>
+    <p>High level:</p>
+    <pre><code>cd atlassian/jsm-email-dedupe
+npm install
+forge login
+forge register   # once
+forge deploy -e development
+forge install    # select Jira + site</code></pre>
+    <p>Production deploy is a separate, explicit step (<code>forge deploy -e production</code> + prod install).</p>
+
+    <h2>After install</h2>
+    <ol>
+      <li>Ensure the service project has an <strong>email / mail handler</strong> channel.</li>
+      <li>Create a disposable test project or use marked test tickets.</li>
+      <li>Run with dry-run first (toggle OFF + env kill switch); check Forge logs (<code>forge logs</code>) for detection lines.</li>
+      <li>Only then allow live: set env kill switch off, redeploy, and have a Jira admin enable <strong>Enable auto-merge</strong>.</li>
+    </ol>
+
+    <footer class="site-footer">
+      <a href="mailto:support@inflexion.pl">support@inflexion.pl</a>
+    </footer>
+  </div>
+</body>
+</html>

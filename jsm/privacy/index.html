@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacy Policy — ReplyMerge for Jira Service Management</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+  <div class="wrap">
+    <header class="site-header">
+      <a href="../../">Inflexion docs</a><span class="sep">·</span><span class="product">ReplyMerge for Jira Service Management</span>
+    </header>
+
+    <h1>Privacy Policy</h1>
+    <p><strong>Effective date:</strong> [DATA]<br>
+    <strong>Controller / vendor:</strong> [NAZWA] ([ADRES], NIP/tax ID: [NIP])<br>
+    <strong>Contact:</strong> <a href="mailto:support@inflexion.pl">support@inflexion.pl</a></p>
+
+    <p>This Privacy Policy describes how [NAZWA] (“we”, “us”) processes information in connection with the Atlassian Marketplace cloud app commonly referred to as <strong>ReplyMerge for Jira Service Management</strong> / <strong>jsm-email-dedupe</strong> (the “App”), a Forge application for Jira Service Management.</p>
+
+    <h2>1. Role of the parties</h2>
+    <ul>
+      <li>The App is installed by an Atlassian customer (the “Customer”) on their Atlassian Cloud site.</li>
+      <li>The Customer is typically the <strong>controller</strong> of End-User Data in their Jira / JSM instance.</li>
+      <li>We provide the App as a Marketplace Partner. Processing by the App occurs primarily <strong>inside Atlassian’s Forge platform</strong> under the Customer’s installation.</li>
+    </ul>
+    <p>See also Atlassian’s developer and Marketplace terms: <a href="https://developer.atlassian.com/platform/marketplace/atlassian-developer-terms/">Atlassian Developer Terms</a>.</p>
+
+    <h2>2. What the App processes</h2>
+    <p>The App may <strong>read and write</strong> the following categories of data <strong>within the Customer’s Atlassian Cloud site</strong>, as needed to detect and merge email-reply duplicates:</p>
+    <table>
+      <thead><tr><th>Category</th><th>Examples</th><th>Where it lives</th></tr></thead>
+      <tbody>
+        <tr><td>Issue / request fields</td><td>Summary, description, status, resolution, created time, project key</td><td>Jira / JSM</td></tr>
+        <tr><td>People identifiers</td><td>Reporter and participant Atlassian account IDs, display names; email addresses only if exposed by Jira APIs the App is allowed to call</td><td>Jira / JSM</td></tr>
+        <tr><td>Comments &amp; attachments</td><td>Comment bodies, visibility (public/internal), attachment metadata and content (re-uploaded on merge; oversized skipped)</td><td>Jira / JSM</td></tr>
+        <tr><td>Channel / properties</td><td><code>request.channel.type</code>, App-owned issue properties (detection + merge audit)</td><td>Jira issue properties</td></tr>
+        <tr><td>Workflow metadata</td><td>Statuses and transition graph (read-only close-path pre-check)</td><td>Jira workflow APIs</td></tr>
+      </tbody>
+    </table>
+    <p>The App does <strong>not</strong> intend to receive raw email <code>Message-ID</code> / <code>In-Reply-To</code> / <code>References</code> headers (those are not exposed to Forge apps for this use case).</p>
+
+    <h2>3. Storage outside Atlassian products</h2>
+    <p>The App does <strong>not</strong> store End-User Data on vendor-operated servers. Persistence is via:</p>
+    <ul>
+      <li><strong>Jira issue entity properties</strong> (detection and merge audit), and</li>
+      <li><strong>Forge app KVS</strong> (<code>storage:app</code>) for the per-site auto-merge toggle and change audit (admin account id + timestamp) — Atlassian-hosted.</li>
+    </ul>
+    <p><strong>Answer for Marketplace Privacy &amp; Security tab:</strong><br>
+    “Does your app store End-User Data outside of Atlassian products and services?” → <strong>No</strong>.<br>
+    See also: <a href="https://developer.atlassian.com/platform/marketplace/runs-on-atlassian/">Runs on Atlassian</a>.</p>
+
+    <h2>4. Egress / subprocessors</h2>
+    <p>The App declares <strong>no</strong> <code>remotes</code> and <strong>no</strong> <code>permissions.external</code> fetch/egress. Runtime compute is Forge.</p>
+    <p><strong>Subprocessors today:</strong> Atlassian (Forge / Jira Cloud). No other subprocessors planned for MVP.</p>
+
+    <h2>5. Purposes</h2>
+    <ul>
+      <li>Detect likely duplicate JSM requests created from email replies</li>
+      <li>Diagnose probable causes</li>
+      <li>Optionally merge content into the original request and close the duplicate</li>
+      <li>Maintain an audit trail for admins/agents</li>
+    </ul>
+
+    <h2>6. Legal bases (EU/EEA — high level)</h2>
+    <p>Where GDPR applies, processing is based on the Customer’s instructions and legitimate interests / contract with the Customer as applicable. Exact Article 6 mapping and any need for a separate DPA with customers should be confirmed with counsel.</p>
+
+    <h2>7. Retention</h2>
+    <ul>
+      <li>Issue properties and comments remain in the Customer’s Jira site under the Customer’s retention practices.</li>
+      <li>On uninstall, Forge app data is subject to Atlassian’s uninstall/data handling for Forge apps.</li>
+    </ul>
+
+    <h2>8. International transfers</h2>
+    <p>Data processed by Forge / Jira Cloud is hosted by Atlassian according to the Customer’s site and data residency configuration. We do not operate a separate transfer of End-User Data to [NAZWA] systems in the MVP architecture.</p>
+
+    <h2>9. Security</h2>
+    <p>We follow Atlassian’s <a href="https://developer.atlassian.com/platform/marketplace/security-requirements/">Security requirements for cloud apps</a> applicable to Forge apps (least-privilege scopes, no storage of user passwords/API tokens, dependency hygiene, etc.). See also our <a href="../security/">Security &amp; data handling</a> page.</p>
+
+    <h2>10. Your rights / contact</h2>
+    <p>End users should contact their <strong>site admin / Customer</strong> first. For vendor privacy questions: <a href="mailto:support@inflexion.pl">support@inflexion.pl</a>.</p>
+
+    <h2>11. Changes</h2>
+    <p>We may update this policy; the effective date will change. Material changes will be noted on this page and/or the Marketplace listing.</p>
+
+    <footer class="site-footer">
+      <a href="mailto:support@inflexion.pl">support@inflexion.pl</a>
+    </footer>
+  </div>
+</body>
+</html>
