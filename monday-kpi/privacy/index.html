@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacy Policy — Board KPI Hub</title>
+  <link rel="canonical" href="https://zepesm.github.io/inflexion-docs/monday-kpi/privacy/">
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+  <div class="wrap">
+    <header class="site-header">
+      <a href="../../">Inflexion docs</a><span class="sep">·</span><span class="product">Board KPI Hub</span>
+    </header>
+
+    <h1>Privacy Policy</h1>
+    <p class="muted">Draft — not legally reviewed. Do not treat as legal advice.</p>
+    <p><strong>Last updated:</strong> 2026-10-29 (draft)<br>
+    <strong>App:</strong> Board KPI Hub — monday.com dashboard widget<br>
+    <strong>Operator:</strong> [FULL NAME] — sole proprietorship (Polish JDG), Poland / EU<br>
+    <strong>NIP:</strong> [NIP]<br>
+    <strong>Contact:</strong> <a href="mailto:support@inflexion.pl">support@inflexion.pl</a><br>
+    <strong>Address:</strong> [BUSINESS ADDRESS]</p>
+
+    <h2>Summary</h2>
+    <p>This app is a <strong>frontend-only</strong> dashboard widget. It runs inside monday.com, reads board data with the <code>boards:read</code> scope, and stores <strong>widget configuration</strong> in monday’s <code>storage.instance</code> API. We do <strong>not</strong> operate an application backend database, do <strong>not</strong> sell personal data, and do <strong>not</strong> run third-party analytics in the MVP. We do <strong>not</strong> request <code>account:read</code> (seat-count gating is deferred).</p>
+
+    <h2>1. Who we are</h2>
+    <p>[FULL NAME] (“we”, “us”), operating as a Polish sole proprietorship (JDG), NIP [NIP], provides the Board KPI Hub monday.com marketplace application (the “App”).</p>
+
+    <h2>2. What the App does</h2>
+    <p>The App displays aggregated KPI values from boards you attach to a monday.com dashboard (sums, averages, counts, filters, formula-column display values, etc.).</p>
+
+    <h2>3. Data we process</h2>
+
+    <h3>3.1 Data processed inside monday.com (not stored by us on our servers)</h3>
+    <p>When you use the App, monday.com provides a session in the dashboard iframe. Using that session, the App may read:</p>
+    <ul>
+      <li>Board metadata (ids, names, column definitions)</li>
+      <li>Item and column values needed for configured KPIs (numbers, status labels, dates, formula display values, mirror values)</li>
+      <li>Dashboard / theme context from the monday SDK</li>
+      <li>Subscription / plan signals <strong>only if</strong> monetization entitlements are enabled (<code>app_subscription</code> in app context — no <code>account:read</code>)</li>
+    </ul>
+    <p>This data is processed <strong>in the browser</strong> to compute KPI tiles. We do <strong>not</strong> transmit board contents to a server we operate.</p>
+
+    <h3>3.2 Configuration data</h3>
+    <p>KPI tile settings are saved with <code>monday.storage.instance</code> (monday-hosted, per widget instance). We do not host a separate config database.</p>
+
+    <h3>3.3 Personal data</h3>
+    <p>The App is not designed to collect names, emails, or other end-user PII beyond what monday already shows in board cells you choose to aggregate. We do <strong>not</strong> maintain user profiles. Support email you send to <a href="mailto:support@inflexion.pl">support@inflexion.pl</a> is processed only to respond to your request.</p>
+
+    <h3>3.4 Analytics and cookies</h3>
+    <p>MVP: <strong>no</strong> third-party analytics SDKs, <strong>no</strong> advertising cookies, <strong>no</strong> tracking pixels shipped by us.</p>
+
+    <h2>4. Legal bases (EU / GDPR)</h2>
+    <p>Depending on your use and role (typically monday.com customer as controller of board content; we as processor / tool provider within monday’s platform):</p>
+    <ul>
+      <li><strong>Legitimate interests / contract</strong> — providing the App features you installed</li>
+      <li><strong>Consent</strong> — where monday or applicable law requires it for marketplace installs</li>
+    </ul>
+
+    <h2>5. Retention</h2>
+    <ul>
+      <li>Board data: not retained by us outside the live session / in-memory cache in the iframe.</li>
+      <li>Instance config: retained by monday instance storage until you remove the widget / clear storage / per monday platform rules (may reset on major app version bumps).</li>
+      <li>Support emails: retained as needed to handle the request, then deleted or minimized.</li>
+    </ul>
+
+    <h2>6. Sharing</h2>
+    <p>We do not sell personal data. Data stays within monday.com’s platform APIs and your browser session, except:</p>
+    <ul>
+      <li>Support correspondence you initiate</li>
+      <li>Legal compliance if required by law</li>
+    </ul>
+    <p>Payment / subscription (when enabled) is handled by <strong>monday.com monetization</strong> — not by a custom payment form in this App.</p>
+
+    <h2>7. Security</h2>
+    <ul>
+      <li>HTTPS via monday CDN / monday-hosted surfaces</li>
+      <li>Scope minimization: <code>boards:read</code> only (no <code>account:read</code>)</li>
+      <li>No custom OAuth token store on our servers (seamless widget session)</li>
+      <li>Production builds omit source maps</li>
+    </ul>
+
+    <h2>8. International transfers</h2>
+    <p>Board data is processed where monday.com and your browser operate. Static Privacy/ToS/help pages are hosted on <strong>GitHub Pages</strong> (<code>zepesm/inflexion-docs</code>) and do <strong>not</strong> embed customer board data.</p>
+
+    <h2>9. Your rights</h2>
+    <p>If you are in the EEA/UK/Switzerland (or similar regimes), you may have rights of access, rectification, erasure, restriction, portability, and objection. Because we do not hold a board-data database, most board-content requests should go to your monday.com account admin / monday.com. Contact us at <a href="mailto:support@inflexion.pl">support@inflexion.pl</a> for App-specific requests.</p>
+
+    <h2>10. Children</h2>
+    <p>The App is intended for business users of monday.com, not for children under 16.</p>
+
+    <h2>11. Changes</h2>
+    <p>We may update this policy. Material changes will be reflected by updating the “Last updated” date and, where required, notifying via the marketplace listing or in-app notice.</p>
+
+    <h2>12. Contact</h2>
+    <p>[FULL NAME] (JDG) · NIP [NIP]<br>
+    Email: <a href="mailto:support@inflexion.pl">support@inflexion.pl</a><br>
+    Address: [BUSINESS ADDRESS]</p>
+
+    <footer class="site-footer">
+      <a href="mailto:support@inflexion.pl">support@inflexion.pl</a>
+    </footer>
+  </div>
+</body>
+</html>
