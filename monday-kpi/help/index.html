@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Help — Board KPI Hub</title>
+  <link rel="canonical" href="https://zepesm.github.io/inflexion-docs/monday-kpi/help/">
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+  <div class="wrap">
+    <header class="site-header">
+      <a href="../../">Inflexion docs</a><span class="sep">·</span><span class="product">Board KPI Hub</span>
+    </header>
+
+    <h1>Board KPI Hub</h1>
+    <p class="muted">Add multiple KPI tiles to any monday.com dashboard — aggregations, filters, and formula columns beyond a five-value arithmetic widget.</p>
+
+    <h2>1. Add the widget</h2>
+    <p>On a dashboard, <strong>Add widget → Apps</strong>, find <em>Board KPI Hub</em>, and place it. Attach the boards you want to measure.</p>
+
+    <h2>2. Create KPI tiles</h2>
+    <ol>
+      <li>Click the <strong>gear</strong> icon (settings) in the widget toolbar.</li>
+      <li>Choose <strong>Add KPI</strong>.</li>
+      <li>Pick a <strong>board</strong>, <strong>column</strong> (Numbers, Formula, or Mirror), and an aggregation (SUM, AVG, MIN, MAX, COUNT, COUNTIF, weighted average).</li>
+      <li>Optional: filters, number format (currency, %, compact like 1.0M), and a color accent.</li>
+    </ol>
+    <p>Config is saved automatically on this widget instance via monday instance storage.</p>
+
+    <h2>3. Formula columns</h2>
+    <p>Formula columns use the live API display value when available. If formula fields are rate-limited or empty, the widget falls back to a client evaluator (numbers and mirror values) and keeps the last good cache when possible.</p>
+
+    <h2>4. Subitems (MVP)</h2>
+    <p>To measure subitems, attach the <strong>subitems board</strong> to the dashboard and select that board on the KPI tile. The include-subitems toggle is not used in the MVP.</p>
+
+    <h2>5. Status filters and “Empty”</h2>
+    <p>Blank Status cells are treated as the label <code>Empty</code> — the same convention monday formulas use. Use that value in status filters / COUNTIF-style logic so results match board formulas.</p>
+
+    <p><strong>Permissions:</strong> this app requests <code>boards:read</code> only. It does not write to boards and does not store your board data on an external server.</p>
+
+    <h2>Tips</h2>
+    <ul>
+      <li>Use compact or currency formats for large totals.</li>
+      <li>Watch the toolbar status for <em>Cached</em>, <em>Stale</em>, or rate-limit hints.</li>
+      <li>Themes follow your monday account (light, dark, black).</li>
+    </ul>
+
+    <p>Support: <a href="mailto:support@inflexion.pl">support@inflexion.pl</a>
+      · <a href="../privacy/">Privacy Policy</a>
+      · <a href="../terms/">Terms of Service</a>
+      · <a href="../contact/">Contact</a></p>
+
+    <footer class="site-footer">
+      <a href="mailto:support@inflexion.pl">support@inflexion.pl</a>
+    </footer>
+  </div>
+</body>
+</html>
