@@ -27,6 +27,7 @@
 
     <h2>2. The service</h2>
     <p>The App is a <strong>dashboard widget</strong> that computes and displays KPI aggregations from boards you attach. It is provided as a client-side application hosted via monday.com’s distribution mechanisms (e.g. CDN zip). Features may include multiple KPI tiles, filters, number formats, and formula-column display with client fallbacks.</p>
+    <p>Optional features may use <strong>monday AI</strong> (monday’s <code>run_prompt</code> / AI gateway) to suggest a KPI definition from a plain-language description or to explain a configured KPI. These features require monday AI availability and consume the customer’s monday AI credits. Manual configuration remains available when AI is unavailable.</p>
     <p>MVP limitations (including Free-tier limits when entitlements are enabled) are described in the listing / pricing materials and may change.</p>
 
     <h2>3. Account and monday.com platform</h2>
@@ -46,16 +47,18 @@
       <li>Taxes, VAT, and payment processing follow monday.com’s and Payoneer’s applicable rules for the vendor.</li>
     </ul>
     <p>Until monetization is enabled by Inflexion Krzysztof Augustyn, the App may be available without marketplace billing.</p>
+    <p><strong>monday AI credits:</strong> optional AI features consume <strong>your</strong> (the customer’s) monday AI credits under your monday.com agreement. Those credits are a monday.com cost, not an Inflexion fee, and are separate from any App marketplace subscription.</p>
     <p><strong>Refunds / cancellations:</strong> follow monday.com marketplace billing policies unless a separate written commitment says otherwise.</p>
 
     <h2>7. Privacy</h2>
-    <p>Our <a href="../privacy/">Privacy Policy</a> describes how data is handled. The App does not operate a board-data backend; configuration uses <code>monday.storage.instance</code>. Scope: <code>boards:read</code> only (<code>account:read</code> / seat gating deferred).</p>
+    <p>Our <a href="../privacy/">Privacy Policy</a> describes how data is handled. The App does not operate a board-data backend; configuration uses <code>monday.storage.instance</code>. Scopes: <code>boards:read</code> and <code>ai:consume</code> (<code>account:read</code> / seat gating deferred). Optional AI prompts run through monday.com only; Inflexion does not store prompts or AI responses.</p>
 
     <h2>8. Intellectual property</h2>
     <p>The App, branding, and documentation remain owned by Inflexion Krzysztof Augustyn or its licensors. monday.com names and marks belong to monday.com Ltd. / monday.com affiliates. You retain ownership of your board content.</p>
 
     <h2>9. Disclaimer</h2>
     <p>THE APP IS PROVIDED <strong>“AS IS”</strong> AND <strong>“AS AVAILABLE”</strong> WITHOUT WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. We do not warrant that KPI calculations will be error-free, that formula fallbacks will match every monday formula edge case, or that service will be uninterrupted (including during monday API throttling).</p>
+    <p><strong>monday AI output:</strong> AI suggestions and explanations may be incomplete, inaccurate, or unsuitable for your board. You must review any AI-generated KPI definition preview before applying it. We do not warrant that monday AI will be available (including on trial plans, when credits are exhausted, or when an admin disables the gateway) or that AI output will match your intent.</p>
 
     <h2>10. Limitation of liability</h2>
     <p>TO THE MAXIMUM EXTENT PERMITTED BY LAW, Inflexion Krzysztof Augustyn SHALL NOT BE LIABLE FOR INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR LOST-PROFIT DAMAGES, OR FOR LOSS OF DATA, ARISING FROM USE OF THE APP. OUR TOTAL LIABILITY FOR CLAIMS IN ANY 12-MONTH PERIOD SHALL NOT EXCEED THE FEES YOU PAID FOR THE APP THROUGH MONDAY.COM MONETIZATION IN THAT PERIOD (OR EUR 50 IF NONE).</p>
