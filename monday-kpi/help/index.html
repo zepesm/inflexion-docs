@@ -26,24 +26,36 @@
       <li>Pick a <strong>board</strong>, <strong>column</strong> (Numbers, Formula, or Mirror), and an aggregation (SUM, AVG, MIN, MAX, COUNT, COUNTIF, weighted average).</li>
       <li>Optional: filters, number format (currency, %, compact like 1.0M), and a color accent.</li>
     </ol>
-    <p>Config is saved automatically on this widget instance via monday instance storage.</p>
+    <p>Config is saved automatically on this widget instance via monday instance storage. You can always configure KPIs manually — AI features below are optional.</p>
 
-    <h2>3. Formula columns</h2>
+    <h2>3. Plain-language KPI builder (optional, monday AI)</h2>
+    <p>Describe the KPI you want in plain language. The App sends your description plus the board’s <strong>column metadata</strong> (ids, titles, types — not item values) to monday AI via monday’s <code>run_prompt</code> API. Review the preview carefully, then click <strong>Apply</strong> to save; nothing is saved until you apply. Usage consumes your account’s monday AI credits.</p>
+
+    <h2>4. Explain this KPI (optional, monday AI)</h2>
+    <p>Use <strong>Explain this KPI</strong> to get a short explanation of a configured tile. The App sends the KPI definition and its aggregated computed numbers to monday AI. This also uses your monday AI credits and does not change the saved configuration by itself.</p>
+
+    <h2>5. Formula columns</h2>
     <p>Formula columns use the live API display value when available. If formula fields are rate-limited or empty, the widget falls back to a client evaluator (numbers and mirror values) and keeps the last good cache when possible.</p>
 
-    <h2>4. Subitems (MVP)</h2>
+    <h2>6. Subitems (MVP)</h2>
     <p>To measure subitems, attach the <strong>subitems board</strong> to the dashboard and select that board on the KPI tile. The include-subitems toggle is not used in the MVP.</p>
 
-    <h2>5. Status filters and “Empty”</h2>
+    <h2>7. Status filters and “Empty”</h2>
     <p>Blank Status cells are treated as the label <code>Empty</code> — the same convention monday formulas use. Use that value in status filters / COUNTIF-style logic so results match board formulas.</p>
 
-    <p><strong>Permissions:</strong> this app requests <code>boards:read</code> only. It does not write to boards and does not store your board data on an external server.</p>
+    <p><strong>Permissions:</strong> this app requests <code>boards:read</code> and <code>ai:consume</code>. It does not write to boards and does not store your board data (or AI prompts/responses) on an Inflexion server.</p>
+
+    <h2>Troubleshooting</h2>
+    <ul>
+      <li><strong>monday AI unavailable:</strong> AI helpers may be blocked on trial plans, when the account has no monday AI credits, or when an admin has disabled the monday AI gateway. Manual KPI configuration still works.</li>
+    </ul>
 
     <h2>Tips</h2>
     <ul>
       <li>Use compact or currency formats for large totals.</li>
       <li>Watch the toolbar status for <em>Cached</em>, <em>Stale</em>, or rate-limit hints.</li>
       <li>Themes follow your monday account (light, dark, black).</li>
+      <li>Always review AI previews before Apply — AI output can be wrong.</li>
     </ul>
 
     <p>Support: <a href="mailto:support@inflexion.pl">support@inflexion.pl</a>

@@ -23,13 +23,13 @@
     <strong>Address:</strong> ul. Ignacego Daszyńskiego 208H, 44-100 Gliwice, Poland</p>
 
     <h2>Summary</h2>
-    <p>This app is a <strong>frontend-only</strong> dashboard widget. It runs inside monday.com, reads board data with the <code>boards:read</code> scope, and stores <strong>widget configuration</strong> in monday’s <code>storage.instance</code> API. We do <strong>not</strong> operate an application backend database, do <strong>not</strong> sell personal data, and do <strong>not</strong> run third-party analytics in the MVP. We do <strong>not</strong> request <code>account:read</code> (seat-count gating is deferred).</p>
+    <p>This app is a <strong>frontend-only</strong> dashboard widget. It runs inside monday.com, reads board data with the <code>boards:read</code> scope, optionally uses monday AI via <code>ai:consume</code>, and stores <strong>widget configuration</strong> in monday’s <code>storage.instance</code> API. We do <strong>not</strong> operate an application backend database, do <strong>not</strong> sell personal data, and do <strong>not</strong> run third-party analytics in the MVP. We do <strong>not</strong> request <code>account:read</code> (seat-count gating is deferred). Optional AI features call monday’s own <code>run_prompt</code> GraphQL API (the monday AI gateway) — there is <strong>no</strong> third-party AI provider and <strong>no</strong> Inflexion backend; we do <strong>not</strong> store prompts or AI responses.</p>
 
     <h2>1. Who we are</h2>
     <p>Inflexion Krzysztof Augustyn (“we”, “us”), operating as a Polish sole proprietorship (JDG), NIP (Polish tax ID): 9690043568, provides the Board KPI Hub monday.com marketplace application (the “App”).</p>
 
     <h2>2. What the App does</h2>
-    <p>The App displays aggregated KPI values from boards you attach to a monday.com dashboard (sums, averages, counts, filters, formula-column display values, etc.).</p>
+    <p>The App displays aggregated KPI values from boards you attach to a monday.com dashboard (sums, averages, counts, filters, formula-column display values, etc.). Optional features can use monday AI to suggest a KPI definition from a plain-language description, or to explain a configured KPI.</p>
 
     <h2>3. Data we process</h2>
 
@@ -49,13 +49,21 @@
     <h3>3.3 Personal data</h3>
     <p>The App is not designed to collect names, emails, or other end-user PII beyond what monday already shows in board cells you choose to aggregate. We do <strong>not</strong> maintain user profiles. Support email you send to <a href="mailto:support@inflexion.pl">support@inflexion.pl</a> is processed only to respond to your request.</p>
 
-    <h3>3.4 Analytics and cookies</h3>
+    <h3>3.4 Optional monday AI features</h3>
+    <p>When you use optional AI features, the App calls monday’s <code>run_prompt</code> GraphQL API (monday AI gateway) from the widget session. Depending on the feature, the prompt may include:</p>
+    <ul>
+      <li><strong>Plain-language KPI builder:</strong> your typed description plus the board’s <strong>column metadata</strong> (column ids, titles, types). Item / cell values are <strong>not</strong> sent for this feature.</li>
+      <li><strong>Explain this KPI:</strong> the KPI definition plus its aggregated computed numbers (not raw board item dumps).</li>
+    </ul>
+    <p>Processing happens within monday.com under your monday.com customer agreement. Usage is billed against the customer’s monday AI credits. Inflexion does <strong>not</strong> send this data to any third-party AI provider, does <strong>not</strong> operate an AI backend, and does <strong>not</strong> store prompts or AI responses. AI may be unavailable (for example trial plans, no credits, or an admin-disabled gateway); manual KPI configuration always works.</p>
+
+    <h3>3.5 Analytics and cookies</h3>
     <p>MVP: <strong>no</strong> third-party analytics SDKs, <strong>no</strong> advertising cookies, <strong>no</strong> tracking pixels shipped by us.</p>
 
     <h2>4. Legal bases (EU / GDPR)</h2>
     <p>Depending on your use and role (typically monday.com customer as controller of board content; we as processor / tool provider within monday’s platform):</p>
     <ul>
-      <li><strong>Legitimate interests / contract</strong> — providing the App features you installed</li>
+      <li><strong>Legitimate interests / contract</strong> — providing the App features you installed (including optional monday AI helpers you choose to run)</li>
       <li><strong>Consent</strong> — where monday or applicable law requires it for marketplace installs</li>
     </ul>
 
@@ -63,21 +71,22 @@
     <ul>
       <li>Board data: not retained by us outside the live session / in-memory cache in the iframe.</li>
       <li>Instance config: retained by monday instance storage until you remove the widget / clear storage / per monday platform rules (may reset on major app version bumps).</li>
+      <li>AI prompts and responses: not stored by Inflexion; any retention by monday.com follows monday’s platform terms.</li>
       <li>Support emails: retained as needed to handle the request, then deleted or minimized.</li>
     </ul>
 
-    <h2>6. Sharing</h2>
-    <p>We do not sell personal data. Data stays within monday.com’s platform APIs and your browser session, except:</p>
+    <h2>6. Sharing and subprocessors</h2>
+    <p>We do not sell personal data. For App runtime data (board reads, instance config, and optional monday AI prompts/responses), the only subprocessor / platform is <strong>monday.com</strong>. Data stays within monday.com’s platform APIs and your browser session, except:</p>
     <ul>
       <li>Support correspondence you initiate</li>
       <li>Legal compliance if required by law</li>
     </ul>
-    <p>Payment / subscription (when enabled) is handled by <strong>monday.com monetization</strong> — not by a custom payment form in this App.</p>
+    <p>Payment / subscription (when enabled) is handled by <strong>monday.com monetization</strong> — not by a custom payment form in this App. monday AI credit consumption (when you use optional AI features) is likewise a monday.com customer cost under your monday agreement.</p>
 
     <h2>7. Security</h2>
     <ul>
       <li>HTTPS via monday CDN / monday-hosted surfaces</li>
-      <li>Scope minimization: <code>boards:read</code> only (no <code>account:read</code>)</li>
+      <li>Scopes: <code>boards:read</code> and <code>ai:consume</code> (no <code>account:read</code>)</li>
       <li>No custom OAuth token store on our servers (seamless widget session)</li>
       <li>Production builds omit source maps</li>
     </ul>
