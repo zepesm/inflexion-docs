@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Security — ReplyMerge for Jira Service Management</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+  <div class="wrap">
+    <header class="site-header">
+      <a href="../../">Inflexion docs</a><span class="sep">·</span><span class="product">ReplyMerge for Jira Service Management</span>
+    </header>
+
+    <h1>Security &amp; data handling</h1>
+    <p>Public security and data-handling facts for <strong>ReplyMerge for Jira Service Management</strong> (Forge cloud app). Contact: <a href="mailto:support@inflexion.pl">support@inflexion.pl</a>.</p>
+
+    <h2>Runs on Atlassian</h2>
+    <p>The App is a <strong>Forge</strong> (Cloud) application. End-User Data stays in the customer’s Atlassian Cloud site and Atlassian-hosted Forge storage. There is no vendor-operated database.</p>
+    <ul>
+      <li>No Connect modules</li>
+      <li>No AI / model processing of customer content (heuristic match only)</li>
+      <li>Subprocessors: <strong>Atlassian only</strong> for MVP</li>
+    </ul>
+    <p>See <a href="https://developer.atlassian.com/platform/marketplace/runs-on-atlassian/">Runs on Atlassian</a>.</p>
+
+    <h2>No egress of customer data</h2>
+    <p>The App declares <strong>no</strong> <code>remotes</code> and <strong>no</strong> <code>permissions.external</code>. Compute runs on Forge; writes go only to Atlassian product APIs under declared scopes. There is no analytics or third-party API that receives in-scope End-User Data.</p>
+
+    <h2>Data processed and storage</h2>
+    <table>
+      <thead><tr><th>Data</th><th>Purpose</th><th>Storage</th><th>Vendor copy?</th></tr></thead>
+      <tbody>
+        <tr><td>Issue summary, description, status, project, created</td><td>Match + merge + audit</td><td>Customer’s Jira / JSM</td><td>No</td></tr>
+        <tr><td>Reporter / participants (account IDs, display names)</td><td>Match + add participants</td><td>Customer’s Jira</td><td>No</td></tr>
+        <tr><td>Comments (public/internal)</td><td>Copy to target with author/date embedded</td><td>Customer’s Jira</td><td>No</td></tr>
+        <tr><td>Attachments (≤ default 50&nbsp;MiB; oversized skipped)</td><td>Re-upload to target on merge</td><td>Customer’s Jira</td><td>Transient in Forge runtime during copy only</td></tr>
+        <tr><td><code>request.channel.type</code> / channel markers</td><td>Gate email-channel detection</td><td>Customer’s Jira</td><td>No</td></tr>
+        <tr><td>Detection property <code>jsm-email-dedupe.detection</code></td><td>Match + diagnosis record</td><td>Issue entity property</td><td>No</td></tr>
+        <tr><td>Merge audit property <code>jsm-email-dedupe.merge</code></td><td>Idempotency + audit</td><td>Issue entity property</td><td>No</td></tr>
+        <tr><td>Workflow statuses / transition graph</td><td>Read-only close-path pre-check</td><td>Read via API; not stored beyond planning that job</td><td>No</td></tr>
+        <tr><td>Forge logs</td><td>Operational debugging</td><td>Atlassian Forge logging</td><td>Per Atlassian platform retention</td></tr>
+        <tr><td>Admin auto-merge toggle + change audit</td><td>Per-site dry-run vs live</td><td>Forge KVS (<code>storage:app</code>)</td><td>No</td></tr>
+      </tbody>
+    </table>
+    <p>Raw email headers (<code>Message-ID</code>, <code>In-Reply-To</code>, <code>References</code>) are <strong>not</strong> available to this Forge app for matching.</p>
+
+    <h2>Scopes</h2>
+    <table>
+      <thead><tr><th>Scope</th><th>Why the App needs it</th><th>Not used for</th></tr></thead>
+      <tbody>
+        <tr><td><code>read:jira-work</code></td><td>Read issues, search candidates, read attachments/properties, inspect available transitions</td><td>Bulk export; unrelated project scraping beyond match window</td></tr>
+        <tr><td><code>write:jira-work</code></td><td>Write comments, upload attachments, create Duplicate issue links, set issue properties, perform transitions on the source after pre-check</td><td>Editing unrelated issues; changing project config</td></tr>
+        <tr><td><code>read:jira-user</code></td><td>Resolve reporter / participant identity fields for match and participant merge</td><td>Marketing profiles; user directory dumps</td></tr>
+        <tr><td><code>read:servicedesk-request</code></td><td>Read JSM request comments, attachments, participants, request-channel context</td><td>Non-JSM project administration</td></tr>
+        <tr><td><code>write:servicedesk-request</code></td><td>Create JSM comments, add request participants, request-level transitions where applicable</td><td>Changing portal / SLA / queue configuration</td></tr>
+        <tr><td><code>read:workflow:jira</code></td><td>Read-only close-path pre-check before any close transition. If no complete path (or workflow unreadable), the App leaves the source untouched and writes an internal note</td><td>Editing workflows; admin configuration changes</td></tr>
+        <tr><td><code>storage:app</code></td><td>Persist per-installation auto-merge toggle (default OFF) and change audit in Forge KVS</td><td>Storing issue bodies, attachments, or other EUD in KVS</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Data retention</h2>
+    <table>
+      <thead><tr><th>Artifact</th><th>Retention</th></tr></thead>
+      <tbody>
+        <tr><td>Issue properties, comments, links, attachments written by the App</td><td>Controlled by the customer’s Jira retention / admin practices</td></tr>
+        <tr><td>On uninstall</td><td>Subject to Atlassian Forge uninstall / app-data handling</td></tr>
+        <tr><td>Vendor-operated backups of End-User Data</td><td><strong>None</strong> in MVP architecture</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Security baseline</h2>
+    <ul>
+      <li>Least-privilege scopes (justified above)</li>
+      <li>No collection/storage of user passwords or long-lived customer API tokens by the App</li>
+      <li>Dependency hygiene before publish</li>
+      <li>Secure handling of attachments during copy (size cap; no vendor persistence)</li>
+      <li>Dry-run default reduces accidental writes</li>
+    </ul>
+    <p>Aligned with Atlassian’s <a href="https://developer.atlassian.com/platform/marketplace/security-requirements/">Security requirements for cloud apps</a>.</p>
+
+    <h2>Vulnerability reporting</h2>
+    <p>Email <a href="mailto:support@inflexion.pl">support@inflexion.pl</a> with subject <code>SECURITY</code>. Do not file public issues for vulnerabilities. Once listed, the vendor follows Atlassian’s <a href="https://developer.atlassian.com/platform/marketplace/security-bug-fix-policy/">Security Bug Fix Policy for Marketplace Apps</a>.</p>
+
+    <footer class="site-footer">
+      <a href="mailto:support@inflexion.pl">support@inflexion.pl</a>
+    </footer>
+  </div>
+</body>
+</html>
