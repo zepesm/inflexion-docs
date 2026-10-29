@@ -1,7 +1,7 @@
 # inflexion-docs
 
-Public documentation for Inflexion apps, served by GitHub Pages at
-[https://zepesm.github.io/inflexion-docs/](https://zepesm.github.io/inflexion-docs/).
+Public documentation for Inflexion apps, served at
+[https://docs.inflexion.pl/](https://docs.inflexion.pl/).
 
 | Path | App |
 |------|-----|
